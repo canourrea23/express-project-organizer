@@ -1,0 +1,7 @@
+<h1>Category: <%= category.name %></h1>
+<% const projects = category.projects %>
+<% for( let index = 0; index < projects.length; index++ ) { %>
+<p>
+  <a href="/projects/<%= projects[index].id %>"><%= projects[index].name %></a>
+</p>
+<% } %>

@@ -10,12 +10,18 @@ router.post('/', (req, res) => {
     deployLink: req.body.deployedLink,
     description: req.body.description
   })
-  .then((project) => {
-    res.redirect('/')
-  })
-  .catch((error) => {
-    res.status(400).render('main/404')
-  })
+    .then((project) => {
+      db.category.findOrCreate({
+        where: { name: req.body.category }
+      }).then(([category, created]) => {
+        project.addCategory(category).then(() => {
+          res.redirect('/')
+        })
+      })
+    })
+    .catch((error) => {
+      res.status(400).render('main/404')
+    })
 })
 
 // GET /projects/new - display form for creating a new project
